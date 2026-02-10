@@ -37,3 +37,26 @@ We are currently in the **Institutional Onboarding** phase.
 
 ---
 *Developed by the Sentinel Foundation. The future of L2 is Hardware-Accelerated.*
+## 🗺️ Project Roadmap: The Path to $1B Ecosystem
+
+### Q1 2026: Genesis & Foundation (Current Phase)
+* [ ] **Core Architecture Finalization:** Locking Sentinel Core v4.0 specifications.
+* [ ] **Institutional Outreach:** Strategic partnership talks with Coinbase Institutional & Paradigm.
+* [ ] **Security Audit Kick-off:** Initiating reviews with Hacken and Trail of Bits.
+* [ ] **Community Launch:** Opening official Discord and Telegram "War Rooms."
+
+### Q2 2026: The Iron Age (Testnet)
+* [ ] **Sentinel Lite Testnet:** Public launch of the EVM-compatible execution layer.
+* [ ] **FPGA Node Onboarding:** First 50 private validator nodes with hardware acceleration.
+* [ ] **TGE (Token Generation Event):** Official listing on Tier-1 exchanges.
+* [ ] **Liquidity Injection:** Activating $20M+ reserve pool via strategic MM partners.
+
+### Q3 2026: Expansion & Scaling
+* [ ] **Mainnet Launch:** Transition to full hardware-accelerated block production.
+* [ ] **Ecosystem Grants:** $5M fund for dApps building on Sentinel (DeFi & GameFi).
+* [ ] **Dynamic Anchor Update (DAU):** Full activation of hardware-enforced invariant protection.
+
+### Q4 2026: Global Dominance
+* [ ] **Cross-chain Integration:** Sentinel Bridge for seamless assets flow between L1s and L2s.
+* [ ] **Institutional Custody:** Full integration with major digital asset custodians.
+* [ ] **Decentralization Phase:** Open-sourcing the core FPGA firmware logic.
