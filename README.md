@@ -1,7 +1,7 @@
 # 🛡️ TOTAL Protocol: The Apex of Value Exchange
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/karamik/totalprotocol/main/logo.png" width="400" alt="TOTAL Protocol Logo" onerror="this.src='https://img.freepik.com/free-vector/cyber-security-concept_23-2148532223.jpg'" />
+  <img src="https://img.freepik.com/free-vector/cyber-security-concept_23-2148532223.jpg" width="400" alt="TOTAL Protocol Logo" style="border-radius: 20px;" />
 </p>
 
 <p align="center">
