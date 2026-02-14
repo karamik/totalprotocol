@@ -1,7 +1,7 @@
 # 🛡️ TOTAL Protocol: The Apex of Value Exchange
 
 <p align="center">
-  <img src="https://img.icons8.com/fluency/240/shield-with-lock.png" width="200" alt="TOTAL Protocol Logo" />
+  <img src="https://postimg.cc/vxY0gqm5" width="200" alt="TOTAL Protocol Logo" />
 </p>
 
 <p align="center">
