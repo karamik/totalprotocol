@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOTAL Protocol: Sentinel Core Demo</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0d1117; /* GitHub Dark background */
+            color: #c9d1d9; /* Light grey text */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: #161b22; /* Slightly lighter than body */
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+        h1 {
+            color: #58a6ff; /* GitHub Blue */
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-size: 1em;
+        }
+        button {
+            background-color: #238636; /* GitHub Green */
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: background-color 0.2s ease;
+        }
+        button:hover {
+            background-color: #2ea043;
+        }
+        #response {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            text-align: left;
+            white-space: pre-wrap; /* For JSON formatting */
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .status-header {
+            color: #c9d1d9;
+            font-size: 0.9em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .loading {
+            color: #58a6ff;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>TOTAL Protocol: Sentinel Core Demo</h1>
+        <p class="status-header">Enter data to send to Sentinel Lite API for hardware verification:</p>
+        <input type="text" id="transactionData" placeholder="e.g., Transfer 1 ETH to 0xABCD..." value="Transfer 1000 TOTAL to Vitalik">
+        <button onclick="processTransaction()">Process Transaction</button>
+        <div id="response">
+            <span class="loading">Awaiting your command, Founder...</span>
+        </div>
+    </div>
+
+    <script>
+        async function processTransaction() {
+            const dataInput = document.getElementById('transactionData');
+            const responseDiv = document.getElementById('response');
+            const transactionData = dataInput.value;
+
+            if (!transactionData) {
+                responseDiv.innerHTML = '<span style="color: #f85149;">Please enter some data.</span>';
+                return;
+            }
+
+            responseDiv.innerHTML = '<span class="loading">Processing... Verifying with Sentinel Core (FPGA)...</span>';
+
+            try {
+                const response = await fetch('http://localhost:8080/process', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ data: transactionData }),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                responseDiv.innerHTML = `<pre>${JSON.stringify(result, null, 2)}</pre>`;
+            } catch (error) {
+                console.error('Error processing transaction:', error);
+                responseDiv.innerHTML = `<span style="color: #f85149;">Error: ${error.message}. Make sure your Go API is running!</span>`;
+            }
+        }
+    </script>
+</body>
+</html>
