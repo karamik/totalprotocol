@@ -41,6 +41,14 @@
 | 🛡️ **SECURITY_VECTORS** | Protection against 15+ physical & logic attacks | [![Read](https://img.shields.io/badge/Read-SECURITY_VECTORS-purple?style=for-the-badge&logo=shield)](SECURITY_VECTORS.md) |
 | 🏛️ **GOVERNANCE** | Global 2-of-3 ownership structure | [![Read](https://img.shields.io/badge/Read-GOVERNANCE-green?style=for-the-badge&logo=balance-scale)](GOVERNANCE.md) |
 | 🧠 **SECURITY_MODEL** | Formal invariants & ZK-Hardware Proofs | [![Read](https://img.shields.io/badge/Read-SECURITY_MODEL-orange?style=for-the-badge&logo=codefactor)](SECURITY_MODEL.md) |
+### 📚 Project Documentation
+
+| Resource | Description | Status | Link |
+| :--- | :--- | :--- | :--- |
+| 📖 **Litepaper** | Technical & Strategic Overview | `v8.0 Stable` | [Read Now](./LITEPAPER.md) |
+| 🛡️ **Security** | Attack Vectors & Mitigation | `Verified` | [Read Now](./SECURITY_VECTORS.md) |
+| ⚖️ **Compliance** | Hardware Disclosure Policy | `Official` | [Read Now](./HARDWARE_COMPLIANCE.md) |
+| 💎 **Tokenomics** | Economic Model & Distribution | `Active` | [**Check $TOTAL**](TOKENOMICS.md) |
 
 </div>
 
