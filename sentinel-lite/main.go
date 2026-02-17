@@ -3,75 +3,81 @@ package main
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
-	"math/rand"
+	"net/http"
 	"sync"
 	"time"
 )
 
-// SentinelNode представляет собой структуру высокопроизводительного узла L2
+// TransactionRequest структура входящего JSON-запроса
+type TransactionRequest struct {
+	Data string `json:"data"`
+}
+
+// TransactionResponse структура ответа от ноды
+type TransactionResponse struct {
+	Hash      string `json:"hash"`
+	Status    string `json:"status"`
+	Finality  string `json:"finality"`
+	Timestamp string `json:"timestamp"`
+}
+
 type SentinelNode struct {
-	mu          sync.Mutex
-	NodeID      string
-	TPS         int
-	QueueSize   int
-	IsActive    bool
+	Version string
+	mu      sync.Mutex
 }
 
-// Transaction имитирует структуру входящей транзакции
-type Transaction struct {
-	Hash      string
-	Payload   string
-	Timestamp time.Time
-}
-
-// NewTransaction создает новую транзакцию с хешем
-func NewTransaction(data string) *Transaction {
-	hash := sha256.Sum256([]byte(data + time.Now().String()))
-	return &Transaction{
-		Hash:      hex.EncodeToString(hash[:]),
-		Payload:   data,
-		Timestamp: time.Now(),
+// HandleProcess обрабатывает входящие HTTP запросы
+func (n *SentinelNode) HandleProcess(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Only POST method is allowed", http.StatusMethodNotAllowed)
+		return
 	}
+
+	var req TransactionRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	// Имитация работы Sentinel Core (Hardware Verification)
+	txHash := n.generateHash(req.Data)
+	
+	fmt.Printf("[Sentinel-Lite] 📡 Incoming Data: %s\n", req.Data)
+	fmt.Printf("[Sentinel-Core] ⚡ Hardware Verification for [%.10s...]\n", txHash)
+
+	// Эмуляция задержки аппаратного ускорения
+	time.Sleep(50 * time.Millisecond)
+
+	response := TransactionResponse{
+		Hash:      txHash,
+		Status:    "VERIFIED_BY_HARDWARE",
+		Finality:  "ATOMIC",
+		Timestamp: time.Now().Format(time.RFC3339),
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(response)
 }
 
-// VerifyWithHardware имитирует вызов к Sentinel Core (FPGA)
-func (n *SentinelNode) VerifyWithHardware(tx *Transaction, wg *sync.WaitGroup) {
-	defer wg.Done()
-
-	fmt.Printf("[Sentinel-Lite] 📡 TX [%.10s...] sent to Sentinel Core (FPGA)\n", tx.Hash)
-	
-	// Имитация задержки аппаратной проверки (Atomic Finality < 1ms)
-	latency := time.Duration(rand.Intn(5)) * time.Millisecond
-	time.Sleep(latency)
-
-	fmt.Printf("[Sentinel-Core] ✅ TX [%.10s...] Verified. Latency: %v\n", tx.Hash, latency)
+func (n *SentinelNode) generateHash(data string) string {
+	hash := sha256.Sum256([]byte(data + time.Now().String()))
+	return hex.EncodeToString(hash[:])
 }
 
 func main() {
-	rand.Seed(time.Now().UnixNano())
+	node := &SentinelNode{Version: "1.2-API"}
 
-	node := &SentinelNode{
-		NodeID:    "SENTINEL-LITE-PROXIMA-1",
-		TPS:       1200000,
-		QueueSize: 0,
-		IsActive:  true,
+	// Роутинг
+	http.HandleFunc("/process", node.HandleProcess)
+
+	fmt.Printf("=== TOTAL Protocol | Sentinel Lite v.%s ===\n", node.Version)
+	fmt.Println("[System] API Server is running on http://localhost:8080")
+	fmt.Println("[System] Endpoint: POST /process")
+	fmt.Println("TOTAL Status: ACTIVE | Standing by for transactions...")
+
+	if err := http.ListenAndServe(":8080", nil); err != nil {
+		fmt.Printf("Failed to start server: %v\n", err)
 	}
-
-	fmt.Printf("=== TOTAL Protocol | Sentinel Lite v.1.1 ===\n")
-	fmt.Printf("Node Status: ACTIVE | Target Throughput: %d TPS\n\n", node.TPS)
-
-	var wg sync.WaitGroup
-	txCount := 5 // Имитируем пачку транзакций
-
-	for i := 0; i < txCount; i++ {
-		wg.Add(1)
-		tx := NewTransaction(fmt.Sprintf("Transfer-Batch-%d", i))
-		go node.VerifyWithHardware(tx, &wg) // Запуск в параллельном потоке (Goroutine)
-	}
-
-	wg.Wait()
-	fmt.Println("\n--------------------------------------------------")
-	fmt.Println("TOTAL Status: SECURE | All Proofs Anchored via Hardware")
-	fmt.Println("System Health: 100% | Thermal Guard: STABLE")
 }
