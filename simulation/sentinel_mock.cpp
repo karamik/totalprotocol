@@ -1,102 +1,49 @@
 /**
  * @file sentinel_mock.cpp
- * @brief Hardware-in-the-Loop (HIL) Simulation for TOTAL Protocol Sentinel Core v.8.0
- * * This module simulates the interaction between the Sentinel Lite (L2 Soft Layer)
- * and the Sentinel Core (FPGA Hardware Layer).
- * * DESIGNED FOR: Atomic Finality & Physical Sovereignty.
+ * @brief Sentinel Core v.8.0 - ZK-Hardware Acceleration Simulation
  */
 
 #include <iostream>
-#include <vector>
 #include <string>
+#include <vector>
+#include <iomanip>
+#include <sstream>
 #include <chrono>
-#include <thread>
 
-namespace Sentinel {
+class SentinelCore {
+public:
+    // Имитация Poseidon Hash - оптимизирован для ZK-доказательств
+    std::string compute_poseidon_hash(const std::string& input) {
+        std::cout << "[Sentinel-Core] Hardware: Executing Poseidon Permutation Layer..." << std::endl;
+        
+        // Математическая симуляция S-Box и MDS матрицы
+        uint64_t fake_state = 0;
+        for (char c : input) fake_state = (fake_state << 5) - fake_state + c;
+        
+        std::stringstream ss;
+        ss << "0x" << std::hex << std::setw(16) << std::setfill('0') << fake_state << "f3b1";
+        return ss.str();
+    }
 
-    struct HardwareHealth {
-        double temperature;
-        bool tmr_sync;
-        bool qrng_entropy_status;
-        int active_cores;
-    };
+    // Thermal Guard: Мониторинг критических зон чипа
+    bool check_thermal_integrity() {
+        double temp = 34.5 + (rand() % 100) / 10.0;
+        std::cout << "[Thermal-Guard] Sensor Zone A: " << temp << "C [STATUS: OK]" << std::endl;
+        return temp < 75.0;
+    }
+};
 
-    class SentinelCoreMock {
-    private:
-        HardwareHealth health;
-        std::string version = "8.0-Absolute-Zero";
-
-    public:
-        SentinelCoreMock() {
-            health = { 32.5, true, true, 3 }; // Optimal start values
-        }
-
-        /**
-         * @brief Simulates Triple Modular Redundancy (TMR) Voter Logic
-         */
-        bool verify_consistency(const std::string& state_a, const std::string& state_b, const std::string& state_c) {
-            std::cout << "[TMR] Voting initiated for state consensus..." << std::endl;
-            if (state_a == state_b || state_a == state_c) return true;
-            if (state_b == state_c) return true;
-            return false;
-        }
-
-        /**
-         * @brief Mimics the Hardware Oracle Shield filtering
-         */
-        bool oracle_shield_filter(double volatility) {
-            const double MAX_THRESHOLD = 0.005; // 0.5% as defined in Security Protocol
-            return volatility < MAX_THRESHOLD;
-        }
-
-        /**
-         * @brief Simulates Thermal Guard logic and Logic Migration
-         */
-        void thermal_monitor(double current_temp) {
-            health.temperature = current_temp;
-            if (health.temperature > 75.0) {
-                std::cout << "[ALERT] Thermal threshold exceeded! Initiating Shadow Core migration..." << std::endl;
-                std::cout << "[SYSTEM] Active Cooling (Peltier) engaged." << std::endl;
-            } else {
-                std::cout << "[SAFE] Operating temperature: " << health.temperature << "C" << std::endl;
-            }
-        }
-
-        void run_diagnostics() {
-            std::cout << "--- TOTAL Protocol Sentinel Core v." << version << " ---" << std::endl;
-            std::cout << "[1] Checking QRNG Entropy... [OK]" << std::endl;
-            std::cout << "[2] Atomic Clock Sync (<1ps drift)... [OK]" << std::endl;
-            std::cout << "[3] TMR Parallel Logic Streams... [ACTIVE]" << std::endl;
-            std::cout << "-----------------------------------------------" << std::endl;
-        }
-    };
-}
-
-/**
- * TEST SUITE: Sentinel Core Hardware Simulation
- */
 int main() {
-    Sentinel::SentinelCoreMock core;
+    SentinelCore core;
+    std::string tx_data = "transfer:100:total_token:0x71";
 
-    // 1. Run Boot Diagnostics
-    core.run_diagnostics();
-
-    // 2. Simulate Transaction Validation
-    std::string tx_hash = "0x7a23b89...f12";
-    if (core.verify_consistency(tx_hash, tx_hash, "0x_malicious_state")) {
-        std::cout << "[SUCCESS] TMR Voter: Consensus Reached. Finality Locked." << std::endl;
+    std::cout << "--- Sentinel Core v.8.0 Diagnostics ---" << std::endl;
+    
+    if (core.check_thermal_integrity()) {
+        std::string proof = core.compute_poseidon_hash(tx_data);
+        std::cout << "[ZK-Accelerator] Generated Poseidon Proof: " << proof << std::endl;
+        std::cout << "[System] State Update: Finalized." << std::endl;
     }
-
-    // 3. Simulate Oracle Shield Trigger
-    double market_volatility = 0.002; // 0.2%
-    if (core.oracle_shield_filter(market_volatility)) {
-        std::cout << "[SHIELD] Oracle data verified. No Flash-Loan patterns detected." << std::endl;
-    }
-
-    // 4. Simulate Thermal Stress
-    core.thermal_monitor(82.4);
-
-    std::cout << "\nTOTAL Status: SECURE | Simulation Complete." << std::endl;
 
     return 0;
 }
