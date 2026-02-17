@@ -37,10 +37,7 @@
 
 | Resource | Description | Link |
 |----------|-------------|------|
-| 📄 **LITEPAPER v.8.0** | Detailed technical roadmap & ZK-HW Specs | [![Read](https://img.shields.io/badge/Read-LITEPAPER-blue?style=for-the-badge&logo=markdown)](LITEPAPER.md) |
-| 🛡️ **SECURITY_VECTORS** | Protection against 15+ physical & logic attacks | [![Read](https://img.shields.io/badge/Read-SECURITY_VECTORS-purple?style=for-the-badge&logo=shield)](SECURITY_VECTORS.md) |
-| 🏛️ **GOVERNANCE** | Global 2-of-3 ownership structure | [![Read](https://img.shields.io/badge/Read-GOVERNANCE-green?style=for-the-badge&logo=balance-scale)](GOVERNANCE.md) |
-| 🧠 **SECURITY_MODEL** | Formal invariants & ZK-Hardware Proofs | [![Read](https://img.shields.io/badge/Read-SECURITY_MODEL-orange?style=for-the-badge&logo=codefactor)](SECURITY_MODEL.md) |
+| 📄 **LITEPAPER v.8.0** | Detailed technical roadmap & ZK-H
 ### 📚 Project Documentation
 
 | Resource | Description | Status | Link |
