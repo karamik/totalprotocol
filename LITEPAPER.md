@@ -81,6 +81,9 @@ TOTAL Protocol solves the "Black Box" hardware problem. The Sentinel Core genera
 ## 8. Conclusion
 **TOTAL Protocol** is not just another L2. It is a paradigm shift where **Physics guarantees the Finance**. We invite institutional partners and developers to join us in building the most resilient financial infrastructure ever created.
 
----
+
+## 9.Economic Engine: The $TOTAL Token
+The protocol utilizes a unique **"Entropy-Backed Value"** model. The scarcity of the token is tied to the physical constraints of the Sentinel hardware network. As the network of hardware nodes grows, the staking requirement creates a supply shock, ensuring long-term value accrual for early adopters and institutional partners.
+
 **"In Physics We Trust."**
 *© 2026 TOTAL Foundation. All hardware designs protected under Trade Secret and Restricted Disclosure Policies.*
