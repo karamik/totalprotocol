@@ -1,74 +1,44 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TOTAL Protocol | Command Center v8.1</title>
+    <title>TOTAL Protocol | Sentinel Dash</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
-<body class="carbon-cobalt">
-    <div class="grid-overlay"></div>
+<body>
+    <div class="scanner-line"></div>
     
-    <main class="dashboard">
-        <section class="panel side-bar">
-            <div class="module entropy-module">
-                <h3><span class="dot"></span> LIVE ENTROPY STREAM</h3>
-                <div id="entropy-display"></div>
-                <span class="status-tag active">QRNG: CALIBRATED</span>
-            </div>
+    <div class="container">
+        <header>
+            <div class="logo">TOTAL PROTOCOL <span class="version">v.8.1</span></div>
+            <div class="status-badge">SYSTEM: <span id="status-text">CONNECTING</span></div>
+        </header>
+
+        <main>
+            <div id="xray-container"></div>
             
-            <div class="module finality-module">
-                <h3><span class="dot"></span> FINALITY GAUGE</h3>
-                <div class="gauge-container">
-                    <div class="gauge-value"><span id="ms-value">0.82</span> <small>ns</small></div>
-                    <div class="gauge-track">
-                        <div class="gauge-fill" id="finality-bar"></div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <label>QUANTUM ENTROPY</label>
+                    <div id="entropy-display" class="value">0000 0000</div>
+                </div>
+                <div class="stat-card">
+                    <label>ATOMIC FINALITY</label>
+                    <div class="value"><span id="ms-value">0.0000</span></div>
+                    <div class="bar-container">
+                        <div id="finality-bar" class="bar"></div>
                     </div>
                 </div>
-                <p class="desc">ATOMIC HARDWARE FINALITY</p>
             </div>
-        </section>
+        </main>
 
-        <section class="panel main-view">
-            <header class="view-header">
-                <h2>SENTINEL CORE v8.1 <span class="sub">// X-RAY INSPECTOR</span></h2>
-            </header>
-            
-            <div id="xray-container">
-                <div class="overlay-ui">
-                    <div class="scan-line"></div>
-                    <div class="coords">LAT: 52.52 | LONG: 13.40</div>
-                    <div class="integrity">BUS INTEGRITY: 100%</div>
-                </div>
-            </div>
+        <footer>
+            <div id="terminal-text">INITIALIZING SENTINEL CORE...</div>
+        </footer>
+    </div>
 
-            <div class="terminal-box">
-                <span class="prompt">>_</span>
-                <span id="terminal-text">INITIALIZING QUANTUM ANCHOR...</span>
-            </div>
-        </section>
-
-        <section class="panel side-bar">
-            <div class="module security-alerts">
-                <h3><span class="dot"></span> DIVINE PARANOIA</h3>
-                <div class="alert-item green">TEMPORAL SYNC: OK</div>
-                <div class="alert-item green">ATOMIC CLOCK: LOCKED</div>
-                <div id="threat-level" class="alert-item">THREAT LEVEL: ZERO</div>
-            </div>
-
-            <div class="module panic-zone">
-                <div class="panic-wrapper">
-                    <button id="panic-switch">
-                        <span class="btn-glitch">PHYSICAL ZEROING</span>
-                        <small>IRREVERSIBLE KEY DISSOLUTION</small>
-                    </button>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
