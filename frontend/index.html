@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TOTAL Status | Sentinel Core</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        :root { --neon: #00ff41; --bg: #050505; }
+        body, html { margin: 0; padding: 0; background: var(--bg); color: var(--neon); font-family: 'Courier New', monospace; overflow: hidden; height: 100%; }
+        .ui-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: space-between; padding: 20px; box-sizing: border-box; pointer-events: none; z-index: 10; }
+        .header { display: flex; justify-content: space-between; border-bottom: 1px solid var(--neon); padding-bottom: 10px; }
+        .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
+        .card { border: 1px solid rgba(0, 255, 65, 0.3); padding: 10px; background: rgba(0, 40, 0, 0.2); }
+        .value { font-size: 1.2rem; font-weight: bold; margin-top: 5px; }
+        .status-active { color: var(--neon); text-shadow: 0 0 10px var(--neon); }
+        #xray-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+        .footer { border-top: 1px solid var(--neon); padding-top: 10px; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+    <div id="xray-container"></div>
+
+    <div class="ui-layer">
+        <div class="header">
+            <div>TOTAL PROTOCOL v.8.1</div>
+            <div id="status-tag" style="color: #ff3e3e;">CONNECTING...</div>
+        </div>
+
+        <div class="stats">
+            <div class="card">
+                <label style="font-size: 0.7rem;">QUANTUM ENTROPY</label>
+                <div id="entropy-val" class="value">---- ----</div>
+            </div>
+            <div class="card">
+                <label style="font-size: 0.7rem;">FINALITY</label>
+                <div id="finality-val" class="value">0.0000</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div id="terminal">INITIALIZING SECURE COUPLING...</div>
+        </div>
+    </div>
+
+    <script>
+        const API = 'https://karamik-totalprotocol.vercel.app/api/status';
+        
+        // --- 3D ENGINE ---
+        const container = document.getElementById('xray-container');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        container.appendChild(renderer.domElement);
+
+        const core = new THREE.Mesh(
+            new THREE.OctahedronGeometry(1.5, 0),
+            new THREE.MeshBasicMaterial({ color: 0x00ff41, wireframe: true })
+        );
+        scene.add(core);
+        camera.position.z = 5;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            core.rotation.y += 0.01;
+            core.rotation.x += 0.005;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // --- DATA SYNC ---
+        async function update() {
+            try {
+                const res = await fetch(API);
+                const data = await res.json();
+                
+                document.getElementById('entropy-val').innerText = data.entropy;
+                document.getElementById('finality-val').innerText = data.finality.toFixed(4);
+                document.getElementById('status-tag').innerText = 'ACTIVE';
+                document.getElementById('status-tag').style.color = '#00ff41';
+                document.getElementById('terminal').innerText = "SYSTEM SECURE | TIMESTAMP: " + data.timestamp;
+            } catch (e) {
+                document.getElementById('status-tag').innerText = 'OFFLINE';
+                document.getElementById('status-tag').style.color = '#ff3e3e';
+            }
+        }
+
+        setInterval(update, 1500);
+        update();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>
