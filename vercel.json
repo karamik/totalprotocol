@@ -1,14 +1,6 @@
 {
   "version": 2,
-  "functions": {
-    "api/*.go": {
-      "runtime": "vercel-go@current"
-    }
-  },
-  "routes": [
-    {
-      "src": "/api/status",
-      "dest": "/api/status.go"
-    }
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/$1.go" }
   ]
 }
