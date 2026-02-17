@@ -82,6 +82,12 @@ The protocol is anchored by a transparent, geographically distributed **2-of-3 m
 
 ---
 
+## 🎮 Sentinel Sandbox (Demo)
+Experience the speed of **Atomic Hardware Finality** through our local sandbox.
+1. **Launch Node:** `cd sentinel-lite && go run main.go`
+2. **Open UI:** Launch `frontend/index.html` in your browser.
+3. **Action:** Send a transaction and watch it get verified by the hardware simulation layer in real-time.
+
 ## 🚀 Roadmap: The Iron Age
 
 1.  **Phase 1: Genesis** — TGE & Coinbase Institutional Custody integration.
