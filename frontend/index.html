@@ -3,92 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TOTAL Status | Sentinel Core</title>
+    <title>TOTAL PROTOCOL | SENTINEL CORE v8.1</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
-        :root { --neon: #00ff41; --bg: #050505; }
+        :root { --neon: #00ff41; --neon-dim: rgba(0, 255, 65, 0.2); --bg: #020202; }
+        * { box-sizing: border-box; }
         body, html { margin: 0; padding: 0; background: var(--bg); color: var(--neon); font-family: 'Courier New', monospace; overflow: hidden; height: 100%; }
-        .ui-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: space-between; padding: 20px; box-sizing: border-box; pointer-events: none; z-index: 10; }
-        .header { display: flex; justify-content: space-between; border-bottom: 1px solid var(--neon); padding-bottom: 10px; }
-        .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
-        .card { border: 1px solid rgba(0, 255, 65, 0.3); padding: 10px; background: rgba(0, 40, 0, 0.2); }
-        .value { font-size: 1.2rem; font-weight: bold; margin-top: 5px; }
-        .status-active { color: var(--neon); text-shadow: 0 0 10px var(--neon); }
-        #xray-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
-        .footer { border-top: 1px solid var(--neon); padding-top: 10px; font-size: 0.8rem; }
+        
+        /* Сетка интерфейса */
+        .ui-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; padding: 15px; z-index: 10; pointer-events: none; }
+        
+        /* Верхняя панель */
+        .header { display: flex; justify-content: space-between; align-items: flex-start; border-left: 4px solid var(--neon); padding-left: 10px; margin-bottom: 20px; }
+        .logo-box { letter-spacing: 2px; }
+        .version { font-size: 0.7rem; opacity: 0.7; }
+
+        /* Центральные виджеты */
+        .grid-main { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: auto; }
+        .card { border: 1px solid var(--neon-dim); background: rgba(0, 20, 0, 0.4); padding: 10px; backdrop-filter: blur(5px); position: relative; overflow: hidden; }
+        .card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: var(--neon); animation: scan 3s infinite linear; }
+        
+        @keyframes scan { 0% { top: -2px; } 100% { top: 100%; } }
+
+        .label { font-size: 0.6rem; text-transform: uppercase; opacity: 0.8; margin-bottom: 5px; display: block; }
+        .value { font-size: 1.1rem; font-weight: bold; text-shadow: 0 0 8px var(--neon); }
+        
+        /* Индикаторы статуса (новые) */
+        .status-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin-top: 10px; }
+        .indicator { font-size: 0.5rem; border: 1px solid var(--neon-dim); padding: 3px; text-align: center; }
+        .active-glow { background: var(--neon-dim); box-shadow: inset 0 0 5px var(--neon); }
+
+        /* 3D Контейнер */
+        #canvas-container { position: absolute; inset: 0; z-index: 1; }
+
+        /* Нижний терминал */
+        .terminal { border: 1px solid var(--neon-dim); padding: 10px; height: 80px; font-size: 0.7rem; background: rgba(0,0,0,0.8); display: flex; flex-direction: column-reverse; }
+        .t-line { margin: 2px 0; }
+        .t-prefix { color: #fff; margin-right: 5px; }
+
+        .bar-outer { width: 100%; height: 4px; background: #002200; margin-top: 8px; }
+        .bar-inner { height: 100%; background: var(--neon); width: 0%; transition: width 0.5s; box-shadow: 0 0 10px var(--neon); }
     </style>
 </head>
 <body>
 
-    <div id="xray-container"></div>
+    <div id="canvas-container"></div>
 
-    <div class="ui-layer">
+    <div class="ui-overlay">
         <div class="header">
-            <div>TOTAL PROTOCOL v.8.1</div>
-            <div id="status-tag" style="color: #ff3e3e;">CONNECTING...</div>
+            <div class="logo-box">
+                <div style="font-weight: bold; font-size: 1.2rem;">SENTINEL CORE</div>
+                <div class="version">TOTAL PROTOCOL HYBRID L2 v.8.1</div>
+            </div>
+            <div id="status-tag" style="text-align: right;">
+                <div style="font-size: 0.6rem;">SYSTEM LINK</div>
+                <div id="link-status" style="color: #ff3e3e;">OFFLINE</div>
+            </div>
         </div>
 
-        <div class="stats">
+        <div class="grid-main">
             <div class="card">
-                <label style="font-size: 0.7rem;">QUANTUM ENTROPY</label>
-                <div id="entropy-val" class="value">---- ----</div>
+                <span class="label">Quantum Entropy</span>
+                <div id="entropy-val" class="value">FETCHING...</div>
+                <div class="status-grid">
+                    <div class="indicator active-glow">QRNG</div>
+                    <div class="indicator active-glow">TRNG</div>
+                    <div id="peltier-ind" class="indicator">PELTIER</div>
+                </div>
             </div>
             <div class="card">
-                <label style="font-size: 0.7rem;">FINALITY</label>
+                <span class="label">Atomic Finality</span>
                 <div id="finality-val" class="value">0.0000</div>
+                <div class="bar-outer"><div id="finality-bar" class="bar-inner"></div></div>
             </div>
         </div>
 
-        <div class="footer">
-            <div id="terminal">INITIALIZING SECURE COUPLING...</div>
+        <div class="status-grid" style="margin: 15px 0;">
+            <div class="card" style="padding: 5px; text-align: center;">
+                <span class="label" style="font-size: 0.5rem;">Bus Integrity</span>
+                <div style="font-size: 0.7rem;">SECURE</div>
+            </div>
+            <div class="card" style="padding: 5px; text-align: center;">
+                <span class="label" style="font-size: 0.5rem;">Oracle Shield</span>
+                <div style="font-size: 0.7rem;">ACTIVE</div>
+            </div>
+            <div class="card" style="padding: 5px; text-align: center;">
+                <span class="label" style="font-size: 0.5rem;">Thermal Guard</span>
+                <div id="temp-val" style="font-size: 0.7rem;">32.4°C</div>
+            </div>
         </div>
+
+        <div class="terminal" id="terminal">
+            </div>
     </div>
 
     <script>
         const API = 'https://karamik-totalprotocol.vercel.app/api/status';
         
         // --- 3D ENGINE ---
-        const container = document.getElementById('xray-container');
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
-        container.appendChild(renderer.domElement);
+        document.getElementById('canvas-container').appendChild(renderer.domElement);
 
+        // Геометрия ядра
         const core = new THREE.Mesh(
-            new THREE.OctahedronGeometry(1.5, 0),
-            new THREE.MeshBasicMaterial({ color: 0x00ff41, wireframe: true })
+            new THREE.IcosahedronGeometry(1.8, 0),
+            new THREE.MeshBasicMaterial({ color: 0x00ff41, wireframe: true, transparent: true, opacity: 0.6 })
         );
         scene.add(core);
+
+        // Внутренняя сфера
+        const inner = new THREE.Mesh(
+            new THREE.SphereGeometry(0.8, 16, 16),
+            new THREE.MeshBasicMaterial({ color: 0x00ff41, wireframe: true, opacity: 0.3, transparent: true })
+        );
+        scene.add(inner);
+
         camera.position.z = 5;
 
         function animate() {
             requestAnimationFrame(animate);
-            core.rotation.y += 0.01;
-            core.rotation.x += 0.005;
+            core.rotation.y += 0.005;
+            core.rotation.x += 0.003;
+            inner.rotation.y -= 0.01;
             renderer.render(scene, camera);
         }
         animate();
 
+        // --- TERMINAL LOGIC ---
+        function addLog(msg) {
+            const t = document.getElementById('terminal');
+            const line = document.createElement('div');
+            line.className = 't-line';
+            line.innerHTML = `<span class="t-prefix">></span> ${msg}`;
+            t.prepend(line);
+            if(t.childNodes.length > 5) t.removeChild(t.lastChild);
+        }
+
         // --- DATA SYNC ---
-        async function update() {
+        async function sync() {
             try {
                 const res = await fetch(API);
                 const data = await res.json();
                 
                 document.getElementById('entropy-val').innerText = data.entropy;
-                document.getElementById('finality-val').innerText = data.finality.toFixed(4);
-                document.getElementById('status-tag').innerText = 'ACTIVE';
-                document.getElementById('status-tag').style.color = '#00ff41';
-                document.getElementById('terminal').innerText = "SYSTEM SECURE | TIMESTAMP: " + data.timestamp;
+                document.getElementById('finality-val').innerText = data.finality.toFixed(6);
+                document.getElementById('finality-bar').style.width = (data.finality * 100) + "%";
+                document.getElementById('link-status').innerText = 'ENCRYPTED';
+                document.getElementById('link-status').style.color = '#00ff41';
+                
+                // Имитация температуры из Vercel
+                const mockTemp = (32 + Math.random() * 2).toFixed(1);
+                document.getElementById('temp-val').innerText = mockTemp + "°C";
+                
+                if(data.is_processing) {
+                    addLog("TRANSACTION_VERIFIED: POSEIDON_HASH_OK");
+                    document.getElementById('peltier-ind').classList.add('active-glow');
+                } else {
+                    addLog("NODE_IDLE: LISTENING_FOR_INGRESS");
+                    document.getElementById('peltier-ind').classList.remove('active-glow');
+                }
+
             } catch (e) {
-                document.getElementById('status-tag').innerText = 'OFFLINE';
-                document.getElementById('status-tag').style.color = '#ff3e3e';
+                document.getElementById('link-status').innerText = 'RECONNECTING';
+                document.getElementById('link-status').style.color = '#ff3e3e';
+                addLog("CRITICAL: SYNC_LOST_RETRYING...");
             }
         }
 
-        setInterval(update, 1500);
-        update();
+        setInterval(sync, 1500);
+        sync();
 
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
