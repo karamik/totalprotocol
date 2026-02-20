@@ -1,8 +1,13 @@
 #!/bin/bash
-echo "🚀 Starting TOTAL Protocol: Sentinel Lite Node..."
-cd sentinel-lite
-go run main.go &
-echo "🌐 Opening Frontend Sandbox..."
-sleep 2
-# Открывает браузер (работает на Mac и большинстве Linux)
-open ../frontend/index.html || xdg-open ../frontend/index.html
+echo "TOTAL Protocol: Launching Sentinel Sandbox..."
+echo "------------------------------------------"
+
+# Компиляция симулятора
+g++ simulation/sentinel_mock.cpp -o simulation/sentinel_sim
+
+# Запуск в фоновом режиме
+./simulation/sentinel_sim &
+
+# Запуск Sentinel Lite (Go-слой)
+echo "Starting Sentinel Lite (Execution Layer)..."
+cd sentinel-lite && go run cmd/main.go
