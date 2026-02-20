@@ -8,23 +8,31 @@ import (
 
 func main() {
 	fmt.Println("=== TOTAL Protocol Orchestrator v.8.2 ===")
-	fmt.Println("[*] Инициализация систем Sentinel Core...")
+	fmt.Println("[*] Запуск Oracle Shield и Sentinel Guard...")
 
-	// Подключаем защитника
+	// Инициализируем защиту и датчики
 	guard := core.NewGuard()
+	oracle := core.NewOracle()
 
-	fmt.Println("[*] Мониторинг безопасности активен.")
+	fmt.Println("[*] Система активна. Мониторинг физических параметров...")
 	
 	for {
-		// Имитация сигналов от железа (в будущем пойдут из Verilog)
-		hwEntropyValid := true 
-		hwNttError := false    
+		// Читаем данные из нашего "железного моста"
+		entropyStatus := oracle.ReadEntropyStatus()
+		temp := oracle.ReadThermalSensors()
 
-		// Постоянная проверка безопасности
-		guard.MonitorSignals(hwEntropyValid, hwNttError)
+		fmt.Printf("[LOG] Temp: %.2f°C | Entropy: %v\n", temp, entropyStatus)
 
-		// Индикация жизни системы
-		fmt.Print(".") 
+		// Если энтропия упала (сигнал атаки или сбоя) — Guard рубит систему
+		if !entropyStatus {
+			guard.MonitorSignals(false, false)
+		}
+
+		// Если температура выше критической (например, 39°C) — предупреждение
+		if temp > 39.0 {
+			fmt.Printf("[!] WARNING: Высокая температура! Активация Peltier-элементов...\n")
+		}
+
 		time.Sleep(2 * time.Second)
 	}
 }
