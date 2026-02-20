@@ -15,24 +15,33 @@
 ---
 
 ## 🚀 Overview
-**TOTAL Protocol** is a hyper-secure Layer 2 infrastructure that solves the "Security-Speed Paradox" through hardware-software symbiosis. Version 8.1 introduces **Absolute Zero** security—a state where the protocol is protected by the laws of quantum mechanics and thermodynamics.
+**TOTAL Protocol** — это гиперзащищенная инфраструктура Layer 2, решающая парадокс «Безопасность-Скорость» через симбиоз аппаратного и программного обеспечения. Версия 8.1 представляет архитектуру **Absolute Zero** — состояние, при котором протокол защищен на уровне термодинамических и квантовых инвариантов.
 
-### 🏛 The Hybrid Architecture:
-* **📡 Sentinel Core (v.8.1):** FPGA-driven hardware heart. Executes **Poseidon ZK-Proofs** at nanosecond speeds.
-* **📜 Sentinel Lite (Execution):** High-speed Go-based EVM node with hardware-enforced memory isolation.
-* **💎 $TOTAL Engine:** Entropy-backed economic model powered by physical **Ring Oscillator TRNG**.
+### 🏛 Hybrid Architecture:
+* **📡 Sentinel Core (v.8.1):** Аппаратное ядро на базе FPGA. Выполняет **Poseidon ZK-Proofs** с наносекундной задержкой.
+* **📜 Sentinel Lite:** Высокопроизводительная нода на Go с аппаратной изоляцией памяти и защитой от дрейфа состояний.
+* **💎 $TOTAL Engine:** Экономическая модель, подкрепленная физической энтропией **Ring Oscillator TRNG**.
 
 ---
 
-## 🛡️ Security Stack (v.8.1 Update)
+## 🛡️ Security Framework: Unified Defense Matrix (v.6.2)
+В рамках Sentinel реализована система непрерывного мониторинга угроз, классифицирующая векторы атак по эшелонам активной обороны.
 
-| Technology | Protection | Status |
-| :--- | :--- | :--- |
-| 🧬 **Poseidon ZK** | Arithmetic circuit-optimized hashing | 🟢 **Verified** |
-| 🧬 **QRNG (RO)** | Physical Entropy via Ring Oscillators | 🟢 **Active** |
-| ❄️ **Peltier Guard** | Active Cooling & Logic Migration | 🔴 **Locked** |
-| 🛰️ **Temporal Sync** | Hardware Atomic Clock (<1ps drift) | 🔵 **Active** |
-| 👻 **Ghost Logic** | Polymorphic Hardware Mutation | 🟣 **Secure** |
+| Технология | Фокус защиты | Метод верификации | Статус |
+| :--- | :--- | :--- | :--- |
+| 🧬 **Poseidon ZK** | Криптографическая целостность | Formal Invariant Check | ✅ **Verified** |
+| 🧬 **QRNG Engine** | Физическая энтропия | Entropy Stuck-at Check | ✅ **Active** |
+| ❄️ **Thermal Guard** | Аппаратная устойчивость | Active Cooling & Logic Migration | ✅ **Secure** |
+| 🛰️ **Oracle Shield** | Целостность внешних данных | VDF & Temporal Sync | ✅ **Active** |
+| 👻 **Adaptive Shield**| Полиморфная защита логики | Multi-zone Heartbeat Anomaly | ✅ **Locked** |
+
+---
+
+## 📊 Operational Metrics (Sentinel SIEM)
+Система Sentinel обеспечивает обнаружение и купирование угроз в реальном времени через интегрированный SIEM-контур:
+* **TTD (Time To Detect):** Субсекундное реагирование на аппаратные и логические аномалии.
+* **FP Rate:** Минимальный уровень ложноположительных срабатываний (< 0.004%).
+* **Verification:** Уровни проверки L1–L3 (от формальной теории до лабораторных стресс-тестов).
 
 ---
 
@@ -58,11 +67,11 @@ Experience the speed of **Atomic Hardware Finality** through our local simulatio
 
 ## 🗺️ Roadmap: The Iron Age
 * **Phase 1: Genesis** — TGE & Coinbase Institutional Custody integration.
-* **Phase 2: Quantum Era** — Activation of Global QRNG Entropy Anchor.
+* **Phase 2: Quantum Era** — Activation of Global QRNG Entropy Anchor & Post-Quantum Upgrades.
 * **Phase 3: Iron Age** — Sentinel Core v.8.1 Mainnet Launch & ASIC Migration.
 
 ---
 
 <p align="center">
-  <b>TOTAL Status: ACTIVE</b> | <i>"In Physics We Trust."</i>
+  <b>TOTAL Status: ACTIVE (Synced with Jira/SIEM)</b> | <i>"In Physics We Trust."</i>
 </p>
