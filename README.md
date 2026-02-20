@@ -62,11 +62,18 @@ Experience the speed of **Atomic Hardware Finality** through our local simulatio
 ---
 
 ## 📂 Repository Structure
-* `📂 /hardware` — **SystemVerilog** interfaces for TRNG and FPGA logic.
-* `📂 /simulation` — **C++** ZK-Accelerator models (Poseidon Hash).
-* `📂 /sentinel-lite` — **Go** High-performance execution layer.
-* `📂 /contracts` — **Solidity** L2 logic and Governance multisig.
-* `📂 /frontend` — **HTML/JS** Transaction visualization sandbox.
+📂 /cmd/orchestrator — "Brain" of the system (Go)
+📂 /internal/core — Security Guard & Hardware Oracle (Go)
+📂 /hardware — FPGA Logic & QRNG Watchdog (Verilog)
+📂 /simulation — ZK-Accelerator & Poseidon Models (C++)
+
+## 🛠 Quick Start (Docker)
+```bash
+docker build -t total-protocol .
+docker run total-protocol
+
+
+* `
 
 ---
 
