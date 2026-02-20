@@ -1,38 +1,42 @@
-# Security Policy
+# 🛡️ Security Policy: TOTAL Protocol (Sentinel Core v.8.1)
 
 ## Overview
-At TOTAL Protocol, security is not a feature—it is our foundational invariant. We employ the **Sentinel Core (v.7.1)** architecture, a hybrid hardware-software defense system designed to withstand both classical and post-quantum threat models.
+В TOTAL Protocol безопасность не является надстройкой — это фундаментальный инвариант системы. Мы используем архитектуру **Sentinel Core (v.8.1)**, гибридную программно-аппаратную систему защиты, спроектированную для противодействия как классическим, так и пост-квантовым моделям угроз.
 
 ## Supported Versions
-We officially support and provide security patches for the following versions:
+Мы официально поддерживаем и предоставляем патчи безопасности для следующих версий:
 
 | Version | Status | Notes |
 | :--- | :--- | :--- |
-| **7.1.x** | ✅ Active | Sentinel Core + Triple-Tier Governance |
-| 7.0.x | ⚠️ Legacy | Superseded by v.7.1 (Co-Temperature Patch) |
-| < 6.6.x | ❌ Deprecated | Not supported |
+| **8.1.x** | ✅ **Active** | Absolute Zero Architecture (SIEM Integrated) |
+| 8.0.x | ⚠️ **Legacy** | Superseded by v.8.1 (Quantum-Ready Patch) |
+| < 7.x.x | ❌ **Deprecated** | End of Life |
 
-## Technical Resilience Framework
-The TOTAL Protocol is hardened against 13+ critical attack vectors, ranging from physical side-channel attacks to quantum brute-forcing. 
+## Technical Resilience Framework (v.6.2)
+TOTAL Protocol защищен от более чем **250 векторов атак**, классифицированных в рамках нашей единой матрицы угроз. Наша защита охватывает:
 
-For a deep dive into our hardware countermeasures (including Peltier cooling, QRNG self-diagnostics, and SEU redundancy), please refer to our technical manifest:
+* **Physical Layer:** Защита от побочных каналов (EMA), лазерных инъекций ошибок и атак типа Cold Boot через механизмы **Thermal Guard** и **Active Isolation**.
+* **Logic Layer:** Формальная верификация инвариантов zkVM и аппаратная изоляция памяти Sentinel Lite.
+* **Network Layer:** RPKI-мониторинг BGP-трасс и защита Oracle-данных через временную синхронизацию (Hardware Atomic Clock).
+
+Для ознакомления с общими принципами нашей многоуровневой защиты (L1-L3 Verification) см. технический манифест:
 👉 **[SECURITY_VECTORS.md](./SECURITY_VECTORS.md)**
 
-## Governance & Custody
-The protocol's integrity is maintained via a **2-of-3 Multisig Governance** model. This ensures no single point of failure (SPF) exists at the management layer.
-- **Biometric Enforcement** (Mobile)
-- **Desktop Execution** (Guardian)
-- **Air-Gapped Recovery** (Cold Anchor)
+## Monitoring & Automation
+Все компоненты Sentinel интегрированы в **единый SIEM-контур**. Это обеспечивает:
+* **Real-time TTD:** Обнаружение аномалий менее чем за 450 мс (Hardware) и 15 с (Logic).
+* **Automated Sync:** Статусы безопасности автоматически синхронизируются с внутренними системами отслеживания (Jira/GitLab).
+* **Auditability:** Непрерывная генерация отчетов о состоянии защищенности для институциональных партнеров.
 
 ## Reporting a Vulnerability
-We welcome the work of security researchers. If you discover a vulnerability, please follow the protocol below:
+Мы приветствуем работу исследователей безопасности. При обнаружении уязвимости, пожалуйста, следуйте данному регламенту:
 
-1. **Do Not Open Public Issues:** Disclosure should be private to protect the ecosystem.
-2. **Report Channel:** Send a detailed report to `security@total-protocol.com` (encrypted with our PGP key).
-3. **Response Time:** Our Sentinel team will acknowledge receipt within 12 hours and provide a full assessment within 48 hours.
+1.  **Private Disclosure:** Не открывайте публичные Issues. Это необходимо для защиты экосистемы.
+2.  **Report Channel:** Отправьте отчет на `security@total-protocol.com` (зашифрованный нашим PGP ключом).
+3.  **SLA:** Команда Sentinel подтвердит получение в течение 12 часов. Время исправления критических багов (SLA Fix) — менее 48 часов.
 
 ## Bug Bounty
-We are committed to rewarding those who help us maintain the **TOTAL Status**. Vulnerabilities found in the core logic or Sentinel Lite components are eligible for rewards based on severity (CVSS 3.1).
+Мы активно вознаграждаем тех, кто помогает поддерживать **TOTAL Status**. Уязвимости, обнаруженные в ядре Sentinel или протоколах ZK, имеют приоритетное право на выплаты согласно шкале CVSS 3.1.
 
 ---
-**TOTAL Status: OMEGA RESILIENCE**
+**TOTAL Status: SECURE (Synced with Sentinel SIEM)** | *2026 Edition*
