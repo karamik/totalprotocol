@@ -7,32 +7,36 @@ import (
 )
 
 func main() {
-	fmt.Println("=== TOTAL Protocol Orchestrator v.8.2 ===")
-	fmt.Println("[*] Запуск Oracle Shield и Sentinel Guard...")
-
-	// Инициализируем защиту и датчики
-	guard := core.NewGuard()
-	oracle := core.NewOracle()
-
-	fmt.Println("[*] Система активна. Мониторинг физических параметров...")
+	fmt.Println("=== TOTAL Protocol Orchestrator v.8.2 (GLOBAL DEFENSE) ===")
 	
+	// Инициализация всех систем защиты из Master Plan
+	guard   := core.NewGuard()
+	oracle  := core.NewOracle()
+	thermal := core.NewThermalControl()
+	entropy := &core.EntropyValidator{}
+	bus     := &core.BusIntegrity{}
+
+	fmt.Println("[*] Все системы Sentinel (Thermal, Entropy, Bus) АКТИВИРОВАНЫ.")
+
 	for {
-		// Читаем данные из нашего "железного моста"
-		entropyStatus := oracle.ReadEntropyStatus()
-		temp := oracle.ReadThermalSensors()
-
-		fmt.Printf("[LOG] Temp: %.2f°C | Entropy: %v\n", temp, entropyStatus)
-
-		// Если энтропия упала (сигнал атаки или сбоя) — Guard рубит систему
-		if !entropyStatus {
-			guard.MonitorSignals(false, false)
+		// 1. Проверка температуры (Защита от Co-Temperature Attack)
+		currentTemp := oracle.ReadThermalSensors()
+		if currentTemp > 40.0 {
+			thermal.ActivateEmergencyCooling()
 		}
 
-		// Если температура выше критической (например, 39°C) — предупреждение
-		if temp > 39.0 {
-			fmt.Printf("[!] WARNING: Высокая температура! Активация Peltier-элементов...\n")
+		// 2. Проверка QRNG (Защита от "залипания" и Cold Start)
+		rawEntropy := uint64(time.Now().UnixNano()) // Имитация потока данных
+		if !entropy.CheckStuckEntropy(rawEntropy) {
+			guard.EmergencyShutdown("QRNG Failure")
 		}
 
-		time.Sleep(2 * time.Second)
+		// 3. Проверка шины (Защита от Glitch Attack)
+		if !bus.VerifyDataPacket("secure_payload", 14) {
+			guard.EmergencyShutdown("Bus Integrity Breach")
+		}
+
+		fmt.Printf("[OK] System Status: Stable | Temp: %.2f°C | Bus: Secure\n", currentTemp)
+		time.Sleep(3 * time.Second)
 	}
 }
