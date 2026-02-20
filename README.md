@@ -48,8 +48,9 @@ Sentinel v.8.1 employs a multi-layered active defense strategy, classifying thre
 ## 🎮 Sentinel Sandbox (Demo)
 Experience the speed of **Atomic Hardware Finality** through our local simulation environment.
 
-1.  **Launch Node:** ```bash
-    cd sentinel-lite && go run main.go
+1.  **Launch Node:** ```cd sentinel-lite && go run cmd/main.go
+
+ 
     ```
 2.  **Open UI:** Launch `frontend/index.html` in your browser.
 3.  **Action:** Send a transaction and watch the real-time **Poseidon ZK-Verification** flow.
