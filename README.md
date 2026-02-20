@@ -19,6 +19,10 @@
 
 ### 🏛 The Hybrid Architecture:
 * **📡 Sentinel Core (v.8.1):** FPGA-driven hardware heart. Executes **Poseidon ZK-Proofs** at nanosecond speeds with integrated SIEM monitoring.
+* ### 🛠 Hardware-Enforced Layer
+* **FPGA Acceleration:** Использование кастомных модулей на Verilog для ускорения Poseidon Hash.
+* **NTT Butterfly Unit (v.8.1):** Оптимизированный блок для модульной арифметики, обеспечивающий наносекундную финализацию транзакций.
+
 * **📜 Sentinel Lite (Execution):** High-speed Go-based EVM node with hardware-enforced memory isolation and state-drift protection.
 * **💎 $TOTAL Engine:** Entropy-backed economic model powered by physical **Ring Oscillator TRNG**.
 
