@@ -61,11 +61,14 @@ Experience the speed of **Atomic Hardware Finality** through our local simulatio
 
 ---
 
-## 📂 Repository Structure
-📂 /cmd/orchestrator — "Brain" of the system (Go)
-📂 /internal/core — Security Guard & Hardware Oracle (Go)
-📂 /hardware — FPGA Logic & QRNG Watchdog (Verilog)
-📂 /simulation — ZK-Accelerator & Poseidon Models (C++)
+
+### 📂 Repository Structure
+
+* **`/cmd/orchestrator`** — System "Brain" & Execution (Go)
+* **`/internal/core`** — Sentinel Guard & Hardware Oracle (Go)
+* **`/hardware`** — QRNG Entropy Watchdog & FPGA Logic (Verilog)
+* **`/simulation`** — ZK-Accelerator & Poseidon Models (C++)
+* **`/frontend`** — Real-time Security SIEM Dashboard (HTML/JS)
 
 ## 🛠 Quick Start (Docker)
 ```bash
