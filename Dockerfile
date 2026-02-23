@@ -1,21 +1,28 @@
-# Используем официальный образ Go для сборки
+
+# TOTAL Protocol: Sentinel Core v.8.1 Execution Environment
 FROM golang:1.21-alpine AS builder
 
-# Устанавливаем рабочую директорию
+RUN apk add --no-cache gcc musl-dev g++ make
+
 WORKDIR /app
+COPY . .
 
-# Копируем файлы проекта
-COPY go.mod ./
-COPY internal/ ./internal/
-COPY cmd/ ./cmd/
+# Собираем основной оркестратор (sentinel-lite)
+RUN cd sentinel-lite && go build -o /sentinel_node cmd/main.go
 
-# Собираем бинарный файл оркестратора
-RUN go build -o orchestrator ./cmd/orchestrator/main.go
+# Собираем симулятор аппаратных инвариантов (C++)
+RUN g++ -O3 simulation/main_sim.cpp -o /hardware_sim
 
-# Финальный легкий образ для запуска
+# Финальный образ
 FROM alpine:latest
-WORKDIR /root/
-COPY --from=builder /app/orchestrator .
+RUN apk add --no-cache bash
 
-# Запуск системы
-CMD ["./orchestrator"]
+WORKDIR /root/
+COPY --from=builder /sentinel_node .
+COPY --from=builder /hardware_sim .
+COPY run_demo.sh .
+
+RUN chmod +x run_demo.sh
+
+# При запуске контейнера стартует демонстрация всех уровней защиты
+ENTRYPOINT ["./run_demo.sh"]
